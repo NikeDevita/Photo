@@ -180,7 +180,7 @@ document.getElementById("bookingForm").addEventListener("submit", function(e) {
 
 // ================== DATA PAKET ==================
 const pilihanPaket = document.getElementById("pilihanPaket");
-const inputPaket = document.getElementById("paketInput");
+const inputBackground = document.getElementById("paketBackground");
 
 const dataPaket = {
     "PhotoBox": [
@@ -216,6 +216,53 @@ document.querySelectorAll("input[name='paket']").forEach(radio => {
 // pilih durasi
 pilihanPaket.addEventListener("change", function() {
     inputPaket.value = this.value;
+});
+</script>
+
+
+const pilihanPaket = document.getElementById("pilihanPaket");
+const inputPaket = document.getElementById("paketInput");
+
+const dataPaket = {
+    "PhotoBox": [
+        "Abu",
+        "Hitam",
+        "Cream",
+        "Kuning",
+        "Pink"
+    ],
+    "SelfPhoto": [
+        "Ala Ruang Tengah",
+        "Adat Jawa modern",
+        "Ala Ruang Tengah",
+        "Polos"
+    ],
+    "Photo Studio": [
+        "Polos Cream",
+        "Polos Modern",
+        "Polos Abu"
+    ]
+};
+
+// pilih jenis paket
+document.querySelectorAll("input[name='paket']").forEach(radio => {
+    radio.addEventListener("change", function() {
+        pilihanPaket.innerHTML = "<option value=''>Bckground</option>";
+
+        dataPaket[this.value].forEach(item => {
+            let opt = document.createElement("option");
+            opt.value = item;
+            opt.textContent = item;
+            pilihanPaket.appendChild(opt);
+        });
+
+        inputBackground.value = "";
+    });
+});
+
+// pilih durasi
+pilihanPaket.addEventListener("change", function() {
+    inputBackground.value = this.value;
 });
 </script>
 
