@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Booking</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    margin: 0;
+    padding: 40px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2 {
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #5a67d8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>📸 Form Booking</h2>
+
+    <form id="bookingForm">
+
+        <div class="row">
+            <div class="form-group">
+                <label>Nama</label>
+                <input type="text" name="nama" required>
+            </div>
+            <div class="form-group">
+                <label>No HP</label>
+                <input type="text" name="hp" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Waktu</label>
+            <input type="text" name="waktu" placeholder="Contoh: 16 April 2026, 10.00 WIB" required>
+        </div>
+
+        <div class="form-group">
+            <label>Pilihan Paket</label>
+            <div class="radio-group">
+                <label><input type="radio" name="paket" value="PhotoBox" required> PhotoBox</label>
+                <label><input type="radio" name="paket" value="SelfPhoto"> SelfPhoto</label>
+                <label><input type="radio" name="paket" value="Photo Studio"> Photo Studio</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Paket</label>
+            <select id="pilihanPaket" required>
+                <option value="">-- Pilih Durasi & Harga --</option>
+            </select>
+
+            <!-- PENYIMPAN DATA -->
+            <input type="hidden" name="paketDetail" id="paketInput">
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label>Background</label>
+                <select name="background" required>
+                    <option value="">-- Pilih Background --</option>
+                    <option>Putih</option>
+                    <option>Hitam</option>
+                    <option>Pink</option>
+                    <option>Biru</option>
+                    <option>Vintage</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Pembayaran</label>
+                <select name="pembayaran">
+                    <option>QRIS</option>
+                    <option>Cash</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status">
+                    <option>Lunas</option>
+                    <option>Belum Lunas</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+// ================== SCRIPT SUBMIT ==================
+document.getElementById("bookingForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+
+    if (!pilihanPaket.value) {
+        alert("Pilih paket dulu ya!");
+        return;
+    }
+
+    const data = {
+        nama: form.nama.value,
+        hp: form.hp.value,
+        waktu: form.waktu.value,
+        paket: form.paket.value,
+        paketDetail: form.paketDetail.value,
+        background: form.background.value,
+        pembayaran: form.pembayaran.value,
+        status: form.status.value
+    };
+
+    let riwayat = JSON.parse(localStorage.getItem("booking")) || [];
+    riwayat.push(data);
+
+    localStorage.setItem("booking", JSON.stringify(riwayat));
+
+    alert("Booking berhasil disimpan!");
+    window.location.href = "riwayat.html";
+});
+
+
+// ================== DATA PAKET ==================
+const pilihanPaket = document.getElementById("pilihanPaket");
+const inputPaket = document.getElementById("paketInput");
+
+const dataPaket = {
+    "PhotoBox": [
+        "10 menit - Rp30.000",
+        "15 menit - Rp45.000"
+    ],
+    "SelfPhoto": [
+        "5 menit - Rp25.000",
+        "15 menit - Rp70.000"
+    ],
+    "Photo Studio": [
+        "60 menit - Rp150.000",
+        "90 menit - Rp250.000"
+    ]
+};
+
+// pilih jenis paket
+document.querySelectorAll("input[name='paket']").forEach(radio => {
+    radio.addEventListener("change", function() {
+        pilihanPaket.innerHTML = "<option value=''>-- Pilih Durasi & Harga --</option>";
+
+        dataPaket[this.value].forEach(item => {
+            let opt = document.createElement("option");
+            opt.value = item;
+            opt.textContent = item;
+            pilihanPaket.appendChild(opt);
+        });
+
+        inputPaket.value = "";
+    });
+});
+
+// pilih durasi
+pilihanPaket.addEventListener("change", function() {
+    inputPaket.value = this.value;
+});
+</script>
+
+</body>
+</html>
