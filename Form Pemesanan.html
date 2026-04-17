@@ -114,11 +114,11 @@ button:hover {
         <div class="row">
             <div class="form-group">
                 <label>Background</label>
-                <select name="background" required>
-                    <option value="">-- Pilih Background --</option>
-                    </select>
-                    <!-- PENYIMPAN DATA -->
-            <input type="hidden" name="BackgroundDetail" id="BackgroundgInput">
+                <select name="background" id="backgroundSelect" required>
+    <option value="">-- Pilih Background --</option>
+</select>
+
+<input type="hidden" name="backgroundDetail" id="backgroundInput">
             </div>
                 
 
@@ -215,54 +215,41 @@ document.querySelectorAll("input[name='paket']").forEach(radio => {
 pilihanPaket.addEventListener("change", function() {
     inputPaket.value = this.value;
 });
-</script>
+
 
 // ================== DATA PAKET ==================
-const pilihanPaket = document.getElementById("pilihanPaket");
-const inputBackground = document.getElementById("BackgroundInput");
+const backgroundSelect = document.getElementById("backgroundSelect");
+const inputBackground = document.getElementById("backgroundInput");
 
-const dataPaket = {
-    "PhotoBox": [
-        "Abu",
-        "Hitam",
-        "Cream",
-        "Kuning",
-        "Pink"
-    ],
-    "SelfPhoto": [
-        "Ala Ruang Tengah",
-        "Adat Jawa modern",
-        "Ala Ruang Tengah",
-        "Polos"
-    ],
-    "Photo Studio": [
-        "Polos Cream",
-        "Polos Modern",
-        "Polos Abu"
-    ]
+const dataBackground = {
+    "PhotoBox": ["Abu", "Hitam", "Cream", "Kuning", "Pink"],
+    "SelfPhoto": ["Ala Ruang Tengah", "Adat Jawa Modern", "Polos"],
+    "Photo Studio": ["Polos Cream", "Polos Modern", "Polos Abu"]
 };
 
-// pilih jenis paket
-document.querySelectorAll("input[name='Background']").forEach(radio => {
+// saat pilih paket → update background juga
+document.querySelectorAll("input[name='paket']").forEach(radio => {
     radio.addEventListener("change", function() {
-        pilihanPaket.innerHTML = "<option value=''>--Pilih Background --</option>";
+
+        // reset background
+        backgroundSelect.innerHTML = "<option value=''>-- Pilih Background --</option>";
 
         dataBackground[this.value].forEach(item => {
             let opt = document.createElement("option");
             opt.value = item;
             opt.textContent = item;
-            pilihanPaket.appendChild(opt);
+            backgroundSelect.appendChild(opt);
         });
 
         inputBackground.value = "";
     });
 });
 
-// pilih bg
-pilihanPaket.addEventListener("change", function() {
+// simpan background yang dipilih
+backgroundSelect.addEventListener("change", function() {
     inputBackground.value = this.value;
 });
+    
 </script>
-
 </body>
 </html>
