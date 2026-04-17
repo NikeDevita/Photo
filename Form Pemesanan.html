@@ -116,9 +116,10 @@ button:hover {
                 <label>Background</label>
                 <select name="background" required>
                     <option value="">-- Pilih Background --</option>
+                    
                     <!-- PENYIMPAN DATA -->
-            <input type="hidden" name="paketDetail" id="BackgroungInput">
-        </div>
+            <input type="hidden" name="BackgroundDetail" id="BackgroundgInput">
+            </div>
                 </select>
             </div>
 
@@ -245,9 +246,9 @@ const dataPaket = {
 // pilih jenis paket
 document.querySelectorAll("input[name='paket']").forEach(radio => {
     radio.addEventListener("change", function() {
-        pilihanPaket.innerHTML = "<option value=''>Bckground</option>";
+        pilihanPaket.innerHTML = "<option value=''>--Pilih Background --</option>";
 
-        dataPaket[this.value].forEach(item => {
+        dataBackground[this.value].forEach(item => {
             let opt = document.createElement("option");
             opt.value = item;
             opt.textContent = item;
@@ -260,7 +261,7 @@ document.querySelectorAll("input[name='paket']").forEach(radio => {
 
 // pilih durasi
 pilihanPaket.addEventListener("change", function() {
-    inputBackground.value = this.value;
+    inputPaket.value = this.value;
 });
 </script>
 
