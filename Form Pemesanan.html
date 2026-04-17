@@ -116,11 +116,9 @@ button:hover {
                 <label>Background</label>
                 <select name="background" required>
                     <option value="">-- Pilih Background --</option>
-                    <option>Putih</option>
-                    <option>Hitam</option>
-                    <option>Pink</option>
-                    <option>Biru</option>
-                    <option>Vintage</option>
+                    <!-- PENYIMPAN DATA -->
+            <input type="hidden" name="paketDetail" id="BackgroungInput">
+        </div>
                 </select>
             </div>
 
@@ -180,7 +178,7 @@ document.getElementById("bookingForm").addEventListener("submit", function(e) {
 
 // ================== DATA PAKET ==================
 const pilihanPaket = document.getElementById("pilihanPaket");
-const inputBackground = document.getElementById("paketBackground");
+pilihanPaket.innerHTML = "<option value=''>-- Pilih Durasi & Harga --</option>";
 
 const dataPaket = {
     "PhotoBox": [
@@ -219,9 +217,9 @@ pilihanPaket.addEventListener("change", function() {
 });
 </script>
 
-
+// ================== DATA PAKET ==================
 const pilihanPaket = document.getElementById("pilihanPaket");
-const inputPaket = document.getElementById("paketInput");
+const inputBackground = document.getElementById("BackgroundInput");
 
 const dataPaket = {
     "PhotoBox": [
